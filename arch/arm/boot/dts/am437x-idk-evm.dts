@@ -200,6 +200,36 @@
 		>;
 	};
 
+	mmc1_pins_default: mmc1_pins_default {
+		pinctrl-single,pins = <
+			AM4372_IOPAD(0x880, PIN_INPUT | MUX_MODE2) /* (B9) gpmc_csn1.mmc1_clk */
+			AM4372_IOPAD(0x884, PIN_INPUT_PULLUP | MUX_MODE2) /* (F10) gpmc_csn2.mmc1_cmd */
+			AM4372_IOPAD(0x820, PIN_INPUT_PULLUP | MUX_MODE2) /* (B10) gpmc_ad8.mmc1_dat0 */
+			AM4372_IOPAD(0x824, PIN_INPUT_PULLUP | MUX_MODE2) /* (A10) gpmc_ad9.mmc1_dat1 */
+			AM4372_IOPAD(0x828, PIN_INPUT_PULLUP | MUX_MODE2) /* (F11) gpmc_ad10.mmc1_dat2 */
+			AM4372_IOPAD(0x82c, PIN_INPUT_PULLUP | MUX_MODE2) /* (D11) gpmc_ad11.mmc1_dat3 */
+			AM4372_IOPAD(0x830, PIN_INPUT_PULLUP | MUX_MODE2) /* (E11) gpmc_ad12.mmc1_dat4 */
+			AM4372_IOPAD(0x834, PIN_INPUT_PULLUP | MUX_MODE2) /* (C11) gpmc_ad13.mmc1_dat5 */
+			AM4372_IOPAD(0x838, PIN_INPUT_PULLUP | MUX_MODE2) /* (B11) gpmc_ad14.mmc1_dat6 */
+			AM4372_IOPAD(0x83c, PIN_INPUT_PULLUP | MUX_MODE2) /* (A11) gpmc_ad15.mmc1_dat7 */
+		>;
+	};
+
+	mmc1_pins_sleep: mmc1_pins_sleep {
+		pinctrl-single,pins = <
+			AM4372_IOPAD(0x880, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (B9) gpmc_csn1.mmc1_clk */
+			AM4372_IOPAD(0x884, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (F10) gpmc_csn2.mmc1_cmd */
+			AM4372_IOPAD(0x820, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (B10) gpmc_ad8.mmc1_dat0 */
+			AM4372_IOPAD(0x824, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (A10) gpmc_ad9.mmc1_dat1 */
+			AM4372_IOPAD(0x828, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (F11) gpmc_ad10.mmc1_dat2 */
+			AM4372_IOPAD(0x82c, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (D11) gpmc_ad11.mmc1_dat3 */
+			AM4372_IOPAD(0x830, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (E11) gpmc_ad12.mmc1_dat4 */
+			AM4372_IOPAD(0x834, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (C11) gpmc_ad13.mmc1_dat5 */
+			AM4372_IOPAD(0x838, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (B11) gpmc_ad14.mmc1_dat6 */
+			AM4372_IOPAD(0x83c, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (A11) gpmc_ad15.mmc1_dat7 */
+		>;
+	};
+
 	spi1_pins_default: spi1_pins_default {
 		pinctrl-single,pins = <
 			AM4372_IOPAD(0x908, PIN_INPUT | MUX_MODE2)	/* mii1_col.spi1_sclk */
@@ -688,6 +718,19 @@
 	vmmc-supply = <&v3_3d>;
 	bus-width = <4>;
 	cd-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+};
+
+&mmc2 {
+	status = "okay";
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&mmc1_pins_default>;
+	pinctrl-1 = <&mmc1_pins_sleep>;
+	vmmc-supply = <&v3_3d>;
+	bus-width = <8>;
+	ti,non-removable;
+	max-frequency = <96000000>;
+	no-1-8-v;
+	/delete-property/ mmc-hs200-1_8v;
 };
 
 &qspi {
