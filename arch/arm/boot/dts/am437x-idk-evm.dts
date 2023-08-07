@@ -710,6 +710,13 @@
 	status = "okay";
 };
 
+&tscadc {
+	status = "okay";
+	adc {
+		ti,adc-channels = <0 1 2>;
+	};
+};
+
 &mmc1 {
 	status = "okay";
 	pinctrl-names = "default", "sleep";
