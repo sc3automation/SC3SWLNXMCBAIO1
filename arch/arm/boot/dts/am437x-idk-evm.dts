@@ -804,20 +804,15 @@
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&davinci_mdio_default>;
 	pinctrl-1 = <&davinci_mdio_sleep>;
-
-	ethphy0: ethernet-phy@4 {
-		reg = <4>;
-	};
-
-	ethphy1: ethernet-phy@5 {
-		reg = <5>;
-	};
 };
 
 &cpsw_port1 {
-	phy-handle = <&ethphy0>;
-	phy-mode = "rgmii-rxid";
+	phy-mode = "rgmii";
 	ti,dual-emac-pvid = <1>;
+	fixed-link {
+		speed = <1000>;
+		full-duplex;
+	};      
 };
 
 &cpsw_port2 {
@@ -861,10 +856,10 @@
 	reset-delay-us = <2>;	/* PHY datasheet states 1uS min */
 
 	pruss1_eth0_phy: ethernet-phy@0 {
-		reg = <0>;
+		reg = <1>;
 	};
 
 	pruss1_eth1_phy: ethernet-phy@1 {
-		reg = <1>;
+		reg = <3>;
 	};
 };
