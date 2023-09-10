@@ -150,31 +150,31 @@
 &am43xx_pinmux {
 	i2c0_pins_default: i2c0_pins_default {
 		pinctrl-single,pins = <
-			AM4372_IOPAD(0x988, PIN_INPUT | SLEWCTRL_FAST | MUX_MODE0) /* i2c0_sda.i2c0_sda */
-			AM4372_IOPAD(0x98c, PIN_INPUT | SLEWCTRL_FAST | MUX_MODE0) /* i2c0_scl.i2c0_scl */
+			AM4372_IOPAD(0x988, PIN_INPUT_PULLUP | SLEWCTRL_FAST | MUX_MODE0) /* (Y22) i2c0_sda.i2c0_sda */
+			AM4372_IOPAD(0x98c, PIN_INPUT_PULLUP | SLEWCTRL_FAST | MUX_MODE0) /* (AB24) i2c0_scl.i2c0_scl */
 		>;
 	};
 
-	i2c0_pins_sleep: i2c0_pins_sleep {
+	i2c1_pins_default: i2c1_pins_default {
 		pinctrl-single,pins = <
-			AM4372_IOPAD(0x988, PIN_INPUT_PULLDOWN | MUX_MODE7)
-			AM4372_IOPAD(0x98c, PIN_INPUT_PULLDOWN | MUX_MODE7)
+			AM4372_IOPAD(0xa0c, PIN_INPUT_PULLUP | MUX_MODE3) /* (AB18) cam0_data1.I2C1_SCL */
+			AM4372_IOPAD(0xa08, PIN_INPUT_PULLUP | MUX_MODE3) /* (AE18) cam0_data0.I2C1_SDA */
 		>;
 	};
 
-	i2c2_pins_default: i2c2_pins_default {
-		pinctrl-single,pins = <
-			AM4372_IOPAD(0x9e8, PIN_INPUT | SLEWCTRL_FAST | MUX_MODE3) /* cam1_data1.i2c2_scl */
-			AM4372_IOPAD(0x9ec, PIN_INPUT | SLEWCTRL_FAST | MUX_MODE3) /* cam1_data0.i2c2_sda */
-		>;
-	};
-
-	i2c2_pins_sleep: i2c2_pins_sleep {
-		pinctrl-single,pins = <
-			AM4372_IOPAD(0x9e8, PIN_INPUT_PULLDOWN | MUX_MODE7)
-			AM4372_IOPAD(0x9ec, PIN_INPUT_PULLDOWN | MUX_MODE7)
-		>;
-	};
+//	i2c2_pins_default: i2c2_pins_default {
+//		pinctrl-single,pins = <
+//			AM4372_IOPAD(0x9e8, PIN_INPUT_PULLUP | SLEWCTRL_FAST | MUX_MODE3) /* cam1_data1.i2c2_scl */
+//			AM4372_IOPAD(0x9ec, PIN_INPUT_PULLUP | SLEWCTRL_FAST | MUX_MODE3) /* cam1_data0.i2c2_sda */
+//		>;
+//	};
+//
+//	i2c2_pins_sleep: i2c2_pins_sleep {
+//		pinctrl-single,pins = <
+//			AM4372_IOPAD(0x9e8, PIN_INPUT_PULLUP | MUX_MODE7)
+//			AM4372_IOPAD(0x9ec, PIN_INPUT_PULLUP | MUX_MODE7)
+//		>;
+//	};
 
 	mmc0_pins_default: pinmux_mmc0_pins_default {
 		pinctrl-single,pins = <
@@ -332,7 +332,7 @@
 		pinctrl-single,pins = <
 			AM4372_IOPAD(0x9b8, PIN_INPUT | MUX_MODE4) /* (AC18) cam0_field.spi2_sclk */
 			AM4372_IOPAD(0x9bc, PIN_OUTPUT | MUX_MODE4) /* (AD17) cam0_wen.spi2_d0 */
-			AM4372_IOPAD(0x9b4, PIN_INPUT | MUX_MODE4) /* (AD18) cam0_vd.spi2_d1 */
+			AM4372_IOPAD(0x9b4, PIN_INPUT_PULLUP | MUX_MODE4) /* (AD18) cam0_vd.spi2_d1 */
 			AM4372_IOPAD(0x9c0, PIN_OUTPUT | MUX_MODE4) /* (AC20) cam0_pclk.spi2_cs0 */
 			AM4372_IOPAD(0x9b0, PIN_OUTPUT | MUX_MODE4) /* (AE17) cam0_hd.spi2_cs1 */
 			AM4372_IOPAD(0x9c4, PIN_OUTPUT | MUX_MODE4) /* (AB19) cam0_data8.spi2_cs2 */
@@ -344,7 +344,7 @@
 		pinctrl-single,pins = <
 			AM4372_IOPAD(0xa50, PIN_INPUT | MUX_MODE0) /* (P25) spi4_sclk.spi4_sclk */
 			AM4372_IOPAD(0xa54, PIN_OUTPUT | MUX_MODE0) /* (R24) spi4_d0.spi4_d0 */
-			AM4372_IOPAD(0xa58, PIN_INPUT | MUX_MODE0) /* (P24) spi4_d1.spi4_d1 */
+			AM4372_IOPAD(0xa58, PIN_INPUT_PULLUP | MUX_MODE0) /* (P24) spi4_d1.spi4_d1 */
 			AM4372_IOPAD(0xa5c, PIN_OUTPUT | MUX_MODE0) /* (N25) spi4_cs0.spi4_cs0 */
 		>;
 	};
@@ -352,7 +352,7 @@
 	pruss1_mdio_default: pruss1-mdio-default {
 		pinctrl-single,pins = <
 			AM4372_IOPAD(0x88c, (PIN_OUTPUT | MUX_MODE5))		/* gpmc_clk.pr1_mdio_mdclk */
-			AM4372_IOPAD(0xa70, (PIN_INPUT  | MUX_MODE8))		/* xdma_event_intr0.pr1_mdio_data */
+			AM4372_IOPAD(0xa70, (PIN_INPUT_PULLUP  | MUX_MODE8))		/* xdma_event_intr0.pr1_mdio_data */
 			AM4372_IOPAD(0xa00, (PIN_INPUT_PULLUP | MUX_MODE7))	/* cam1_data6.gpio4_20 */
 		>;
 	};
@@ -431,9 +431,8 @@
 
 &i2c0 {
 	status = "okay";
-	pinctrl-names = "default", "sleep";
+	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0_pins_default>;
-	pinctrl-1 = <&i2c0_pins_sleep>;
 	clock-frequency = <400000>;
 
 	eeprom@50 {
@@ -539,19 +538,26 @@
 	};
 };
 
+&i2c1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_pins_default>;
+	clock-frequency = <400000>;
+};
+
 &i2c2 {
 	status = "okay";
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&i2c2_pins_default>;
-	pinctrl-1 = <&i2c2_pins_sleep>;
-	clock-frequency = <100000>;
-
-	tpic2810: tpic2810@60 {
-		compatible = "ti,tpic2810";
-		reg = <0x60>;
-		gpio-controller;
-		#gpio-cells = <2>;
-	};
+//	pinctrl-names = "default", "sleep";
+//	pinctrl-0 = <&i2c2_pins_default>;
+//	pinctrl-1 = <&i2c2_pins_sleep>;
+//	clock-frequency = <100000>;
+//
+//	tpic2810: tpic2810@60 {
+//		compatible = "ti,tpic2810";
+//		reg = <0x60>;
+//		gpio-controller;
+//		#gpio-cells = <2>;
+//	};
 };
 
 &spi1 {
@@ -703,7 +709,7 @@
 		AM4372_IOPAD(0x9f4, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AE22) cam1_data3.gpio4[17] */
 		AM4372_IOPAD(0x9f8, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AD22) cam1_data4.gpio4[18] */
 		AM4372_IOPAD(0x9fc, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AE23) cam1_data5.gpio4[19] */
-		AM4372_IOPAD(0xa00, PIN_OUTPUT | MUX_MODE7) /* (AD23) cam1_data6.gpio4[20] */
+		// defined below AM4372_IOPAD(0xa00, PIN_OUTPUT | MUX_MODE7) /* (AD23) cam1_data6.gpio4[20] */
 		AM4372_IOPAD(0xa04, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AE24) cam1_data7.gpio4[21] */
 		AM4372_IOPAD(0xa10, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (Y18) cam0_data2.gpio4[24] */
 		AM4372_IOPAD(0xa14, PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AA18) cam0_data3.gpio4[25] */
@@ -719,7 +725,7 @@
 	pinctrl-single,pins = <
 		AM4372_IOPAD(0xa34, PIN_OUTPUT | MUX_MODE7) /* (K24) uart3_rtsn.gpio5[1] */
 		AM4372_IOPAD(0xa2c, PIN_OUTPUT | MUX_MODE7) /* (H24) uart3_txd.gpio5[3] */
-		AM4372_IOPAD(0xa38, PIN_OUTPUT | MUX_MODE7) /* (D25) gpio5_8.gpio5[8] */
+		// defined below AM4372_IOPAD(0xa38, PIN_OUTPUT | MUX_MODE7) /* (D25) gpio5_8.gpio5[8] */
 		AM4372_IOPAD(0xa3c, PIN_INPUT_PULLUP | MUX_MODE7) /* (F24) gpio5_9.gpio5[9] */
 		AM4372_IOPAD(0xa48, PIN_INPUT_PULLUP | MUX_MODE7) /* (E25) gpio5_12.gpio5[12] */
 		AM4372_IOPAD(0xa74, PIN_INPUT_PULLUP | MUX_MODE9) /* (C24) xdma_event_intr1.gpio5[29] */
